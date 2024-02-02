@@ -22,27 +22,31 @@ Constraints:
 -30 <= nums[i] <= 30
 The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
  '''
- class Solution {
-    public int[] productExceptSelf(int[] nums) {
-        int[] left = new int[nums.length];
-        
-        int[] right = new int[nums.length];
-        
-        left[0] = 1;
-        for (int i = 1; i < nums.length; i++) {
-            left[i] = left[i-1] * nums[i-1];
-        }
-        
-        right[nums.length - 1] = 1;
-        for (int i = nums.length - 2; i >= 0; i--) {
-            right[i] = right[i+1] * nums[i+1];
-        }
-        
-        int[] product = new int[nums.length];
-        for (int i = 0; i < product.length; i++) {
-            product[i] = left[i] * right[i];
-        }
-        
-        return product;
-    }
-}
+ class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+
+        # Initialize an array to store the number of ways to climb for each step
+        ways_to_climb = [0] * (n + 1)
+
+        # Base cases
+        ways_to_climb[1] = 1
+        ways_to_climb[2] = 2
+
+        # Calculate the number of ways to climb for each step using dynamic programming
+        for i in range(3, n + 1):
+            ways_to_climb[i] = ways_to_climb[i - 1] + ways_to_climb[i - 2]
+
+        return ways_to_climb[n]
+
+# Example usage:
+solution = Solution()
+print(solution.climbStairs(2))  # Output: 2
+print(solution.climbStairs(3))  # Output: 3
